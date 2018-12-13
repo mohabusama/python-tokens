@@ -9,7 +9,7 @@ __version__ = '0.8'
 
 logger = logging.getLogger('tokens')
 
-ONE_YEAR = 3600*24*365
+ONE_YEAR = 3600 * 24 * 365
 EXPIRATION_TOLERANCE_SECS = 60
 # TODO: make time value configurable (20 minutes)?
 REFRESH_BEFORE_SECS_LEFT = 20 * 60
@@ -64,8 +64,9 @@ def configure(**kwargs):
 def manage(token_name, scopes=None, ignore_expiration=False):
     """ ignore_expiration will enable using expired tokens in get()
         in cases where you token service does not yield a new token """
-    TOKENS[token_name] = {'scopes': scopes or [], 'ignore_expiration': ignore_expiration}
-    init_fixed_tokens_from_env()
+    if token_name not in TOKENS:
+        TOKENS[token_name] = {'scopes': scopes or [], 'ignore_expiration': ignore_expiration}
+        init_fixed_tokens_from_env()
 
 
 def start():
